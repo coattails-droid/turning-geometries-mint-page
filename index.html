@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="sunlight">
+<head>
+<script>
+  /* Theme is set before first paint: saved choice wins, otherwise Sunlight (the standard). */
+  (function(){try{var t=localStorage.getItem('coattails-theme');document.documentElement.setAttribute('data-theme',t==='warmgray'?'warmgray':'sunlight');}catch(e){document.documentElement.setAttribute('data-theme','sunlight');}})();
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Turning Geometries — Mint</title>
+<meta name="description" content="Turning Geometries (Series 7) by Calvin Fought (Coattails) — 25 generative geometry pieces rendered live on-chain. Mint at 0.001 ETH.">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QFQNW5T87Y"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QFQNW5T87Y');
+</script>
+<style>
+  /* Sunlight (default) — the branding guide standard. */
+  :root, :root[data-theme="sunlight"]{
+    --bg:#0d0708;
+    --surface:#0d0708;
+    --ink:#e8e2d4;
+    --muted:#9a937f;
+    --line:#3a362c;
+    --line-dark:#3a362c;
+    --title:#ffc46e;
+    --accent:#ffc46e;
+    --btn-bg:#ffc46e;
+    --btn-ink:#14100a;
+    --btn-hover:#ffa37e;
+    --err:#ff7f8a;
+    --focus:#ffc46e;
+    --shadow-card:none;
+    --font-display:'DejaVu Sans Mono',Menlo,Consolas,'Courier New',monospace;
+    --font-body:'DejaVu Sans Mono',Menlo,Consolas,'Courier New',monospace;
+  }
+  /* Warm Gray (visitor alternate) — branding guide v1.1 Light theme. */
+  :root[data-theme="warmgray"]{
+    --bg:#E8E4DC;
+    --surface:#F5F2EB;
+    --ink:#111110;
+    --muted:#57534A;
+    --line:#CFC9BB;
+    --line-dark:#111110;
+    --title:#000;
+    --accent:#111110;
+    --btn-bg:#111110;
+    --btn-ink:#F5F2EB;
+    --btn-hover:#26241F;
+    --err:#b3261e;
+    --focus:#111110;
+    --shadow-card:0 20px 38px -24px rgba(30,26,18,.35);
+    --font-display:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  }
+  :root { color-scheme: dark; }
+  :root[data-theme="warmgray"] { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 28px 16px 64px;
+    background: var(--bg); color: var(--ink);
+    font-family: var(--font-body);
+  }
+  main { max-width: 860px; margin: 0 auto; }
+  h1 { font-family: var(--font-display); font-size: 34px; margin: 0 0 6px; letter-spacing: 0.5px; color: var(--title); }
+  .series { color: var(--muted); font-size: 14px; margin: 0 0 20px; letter-spacing: 1px; }
+  .hero { width: min(620px, 100%); height: auto; aspect-ratio: 1; display: block;
+          margin: 0 0 26px; border: 1px solid var(--line); }
+  .sub { color: var(--ink); line-height: 1.7; margin: 0 0 26px; max-width: 620px; }
+  .sub .dim { color: var(--muted); }
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line); box-shadow: var(--shadow-card);
+    padding: 16px 18px; margin-bottom: 18px; max-width: 620px;
+  }
+  .row { display: flex; justify-content: space-between; align-items: baseline;
+         padding: 6px 0; font-size: 15px; }
+  .row .label { color: var(--muted); }
+  .row .value { color: var(--ink); font-variant-numeric: tabular-nums; }
+  .row .value.gold { color: var(--accent); }
+  .row .value.dim { color: var(--muted); }
+  button {
+    font-family: inherit; font-size: 16px; cursor: pointer;
+    background: var(--btn-bg); color: var(--btn-ink); border: 1px solid var(--btn-bg);
+    padding: 10px 22px; width: 100%; margin-top: 12px;
+  }
+  button:hover:not(:disabled) { background: var(--btn-hover); border-color: var(--btn-hover); }
+  button:disabled { background: transparent; color: var(--muted); border-color: var(--line); cursor: not-allowed; }
+  button.secondary {
+    background: transparent; color: var(--accent);
+    border: 1px solid var(--accent); width: auto; padding: 10px 22px; font-size: 14px;
+  }
+  button.secondary:hover { background: transparent; color: var(--btn-hover); border-color: var(--btn-hover); }
+  #status { margin-top: 14px; font-size: 14px; line-height: 1.6; min-height: 22px; }
+  #status.ok { color: #8fd18f; }
+  #status.err { color: var(--err); }
+  #status.info { color: var(--muted); }
+  #status a { color: var(--accent); }
+  .fine { color: var(--muted); font-size: 13px; line-height: 1.7; max-width: 620px; }
+  .fine a { color: var(--accent); }
+  .addr { font-size: 12px; color: var(--accent); word-break: break-all; }
+  hr { border: none; border-top: 1px solid var(--line); margin: 26px 0; max-width: 620px; }
+  /* ---------- theme toggle (guide v1.1) ---------- */
+  .topbar{display:flex;justify-content:flex-end;padding:4px 0 18px;max-width:620px}
+  .theme-toggle{
+    display:inline-flex;border:1.5px solid var(--line-dark);border-radius:999px;
+    overflow:hidden;background:var(--surface);
+  }
+  .theme-toggle button{
+    appearance:none;-webkit-appearance:none;border:0;background:transparent;width:auto;margin-top:0;
+    color:var(--muted);font-family:var(--font-body);font-size:12px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;padding:9px 18px;cursor:pointer;
+    transition:background .2s ease,color .2s ease;
+  }
+  .theme-toggle button[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-ink)}
+  .theme-toggle button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+  @media (max-width: 560px) { h1 { font-size: 27px; } }
+</style>
+</head>
+<body>
+<main>
+  <div class="topbar">
+    <div class="theme-toggle" role="group" aria-label="Theme">
+      <button type="button" data-set-theme="sunlight" aria-pressed="true">Dark</button>
+      <button type="button" data-set-theme="warmgray" aria-pressed="false">Light</button>
+    </div>
+  </div>
+
+  <h1>TURNING GEOMETRIES</h1>
+  <p class="series">SERIES 7 &middot; CALVIN FOUGHT (COATTAILS)</p>
+
+  <img class="hero" src="img/turning-geometries.webp" alt="Turning Geometries — Token 1 in the Sunlight palette" width="720" height="720">
+
+  <p class="sub">
+    Twenty-five generative geometry pieces, rendered live on-chain by the
+    contract itself. Triangular Fibonacci shells &mdash; 148,200 points a
+    piece &mdash; bloom from three seeded foci in one of four dealt palettes:
+    Sunlight, Lotus, Neon, or Ultraviolet. Each piece folds through a slow
+    four-minute cycle beneath a stippled construction lattice, its shells
+    clustered in the outer field so it fills its frame edge to edge.
+  </p>
+
+  <div class="card">
+    <div class="row"><span class="label">Price</span>
+      <span class="value gold" id="price">0.001 ETH</span></div>
+    <div class="row"><span class="label">Minted</span>
+      <span class="value" id="supply">&mdash; / 25</span></div>
+    <div class="row"><span class="label">Sale</span>
+      <span class="value" id="sale">checking&hellip;</span></div>
+    <div class="row"><span class="label">Wallet</span>
+      <span class="value dim" id="wallet">not connected</span></div>
+    <div id="connect-wrap">
+      <button id="connect" class="secondary">Connect wallet</button>
+    </div>
+    <button id="mint" disabled>Mint &mdash; 0.001 ETH</button>
+    <div id="status" role="status"></div>
+  </div>
+
+  <div class="card">
+    <div class="row"><span class="label">Contract</span></div>
+    <div class="addr" id="contract">0x1Dc909aF05888175b41c662eF7295F5645E281Bb</div>
+    <div class="row" style="margin-top:8px"><span class="label">Royalties</span>
+      <span class="value">10% &rarr; coattails.eth</span></div>
+    <div class="row"><span class="label">Renderer</span>
+      <span class="value dim">fully on-chain &mdash; every token renders itself from its mint hash</span></div>
+  </div>
+
+  <hr>
+  <p class="fine">
+    The contract requires <strong>exactly</strong> 0.001 ETH &mdash; sending
+    more or less reverts the transaction. Minting works with any wallet that
+    can sign Ethereum transactions, including contract wallets and multisigs.
+    Royalties are hard-capped at 10% in the contract. After the collection
+    is complete, ownership is renounced on-chain, leaving the collection
+    with no administrator.
+    <br><br>
+    Watch the pieces fold in the
+    <a href="https://coattails-droid.github.io/turning-geometries-preview/">preview gallery</a>,
+    or open any minted token &mdash; its artwork is alive on-chain.
+  </p>
+</main>
+<script src="config.js"></script>
+<script src="mint.js"></script>
+<script>
+  /* Theme toggle wiring (guide v1.1): sync pressed state, save the choice. */
+  (function(){
+    var root=document.documentElement;
+    var btns=document.querySelectorAll('[data-set-theme]');
+    function sync(){
+      var t=root.getAttribute('data-theme')||'sunlight';
+      btns.forEach(function(b){b.setAttribute('aria-pressed',b.getAttribute('data-set-theme')===t?'true':'false');});
+    }
+    btns.forEach(function(b){
+      b.addEventListener('click',function(){
+        var t=b.getAttribute('data-set-theme');
+        root.setAttribute('data-theme',t);
+        try{localStorage.setItem('coattails-theme',t);}catch(e){}
+        sync();
+      });
+    });
+    sync();
+  })();
+</script>
+</body>
+</html>
