@@ -128,6 +128,13 @@
   .theme-toggle button[aria-pressed="true"]{background:var(--btn-bg);color:var(--btn-ink)}
   .theme-toggle button:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
   @media (max-width: 560px) { h1 { font-size: 27px; } }
+
+  /* ---------- heading font matched to the Preview pages (2026-11-15) ----------
+     Preview fleet spec (font unification, from Seeded/Tidal/Touring):
+     20px / letter-spacing 0.35em / weight 600, family var(--font-display)
+     (DejaVu Sans Mono in Dark). Appended last, as on the previews,
+     so it wins over the 34px base and the 27px mobile rule. */
+  h1 { font-size: 20px; letter-spacing: 0.35em; font-weight: 600; }
 </style>
 </head>
 <body>
